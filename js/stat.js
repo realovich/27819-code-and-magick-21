@@ -43,6 +43,10 @@ const getMaxElement = function (arr) {
   return maxElement;
 };
 
+const getRandomColorSaturation = (hue) => {
+  return `hsl(${hue}, ${Math.round(Math.random() * 100)}%, 50%)`;
+};
+
 window.renderStatistics = function (ctx, names, times) {
   const maxTime = getMaxElement(times);
 
@@ -58,20 +62,10 @@ window.renderStatistics = function (ctx, names, times) {
   for (let i = 0; i < names.length; i++) {
     const barHeight = Math.round((BarSize.HEIGHT * times[i]) / maxTime);
     const leftPosition = ChartCoordinate.INITIAL_X + (BarSize.WIDTH + BAR_GAP) * i;
-    let barColor;
-
-    if (names[i] === `Вы`) {
-      barColor = `rgba(255, 0, 0, 1)`;
-    } else {
-      const colorHue = 240;
-      const colorLightness = 50;
-      const colorSaturation = Math.round(Math.random() * 100);
-      barColor = `hsl(${colorHue}, ${colorSaturation}%, ${colorLightness}%)`;
-    }
 
     ctx.fillText(names[i], leftPosition, ChartCoordinate.INITIAL_Y);
 
-    ctx.fillStyle = barColor;
+    ctx.fillStyle = (names[i] === `Вы`) ? `rgba(255, 0, 0, 1)` : getRandomColorSaturation(240);
     ctx.fillRect(leftPosition, ChartCoordinate.INITIAL_Y - barHeight - CLOUD_GAP / 2, BarSize.WIDTH, barHeight);
 
     ctx.fillStyle = `black`;
