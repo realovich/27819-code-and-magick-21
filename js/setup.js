@@ -2,8 +2,8 @@
 
 const WIZARD_FIRST_NAMES = [`Иван`, `Хуан Себастьян`, `Мария`, `Кристоф`, `Виктор`, `Юлия`, `Люпита`, `Вашингтон`];
 const WIZARD_LAST_NAMES = [`да Марья`, `Верон`, `Мирабелла`, `Вальц`, `Онопко`, `Топольницкая`, `Нионго`, `Ирвинг`];
-const wizardCoatColors = [`rgb(101, 137, 164)`, `rgb(241, 43, 107)`, `rgb(146, 100, 161)`, `rgb(56, 159, 117)`, `rgb(215, 210, 55)`, `rgb(0, 0, 0)`];
-const wizardEyesColors = [`black`, `red`, `blue`, `yellow`, `green`];
+const WIZARD_COAT_COLORS = [`rgb(101, 137, 164)`, `rgb(241, 43, 107)`, `rgb(146, 100, 161)`, `rgb(56, 159, 117)`, `rgb(215, 210, 55)`, `rgb(0, 0, 0)`];
+const WIZARD_EYES_COLORS = [`black`, `red`, `blue`, `yellow`, `green`];
 
 const userDialog = document.querySelector(`.setup`);
 userDialog.classList.remove(`hidden`);
@@ -14,18 +14,17 @@ const similarListElement = userDialog.querySelector(`.setup-similar-list`);
 
 const similarWizardTemplate = document.querySelector(`#similar-wizard-template`).content.querySelector(`.setup-similar-item`);
 
-const getRandomItemFromArray = (array) => {
-  return array[Math.floor(Math.random() * array.length)];
-};
+const getRandomItemFromArray = (array) => array[Math.floor(Math.random() * array.length)];
 
 const renderWizardArray = (length) => {
-  const array = new Array(length);
+  const array = [];
+  
   for (let i = 0; i < length; i++) {
-    array[i] = {
+    array.push({
       name: `${getRandomItemFromArray(WIZARD_FIRST_NAMES)} ${getRandomItemFromArray(WIZARD_LAST_NAMES)}`,
-      coatColor: getRandomItemFromArray(wizardCoatColors),
-      eyesColor: getRandomItemFromArray(wizardEyesColors)
-    };
+      coatColor: getRandomItemFromArray(WIZARD_COAT_COLORS),
+      eyesColor: getRandomItemFromArray(WIZARD_EYES_COLORS)
+    });
   }
 
   return array;
@@ -50,7 +49,7 @@ const renderWizardsList = () => {
     fragment.appendChild(renderWizard(wizards[i]));
   }
 
-  return similarListElement.appendChild(fragment);
+  similarListElement.appendChild(fragment);
 };
 
 renderWizardsList();
