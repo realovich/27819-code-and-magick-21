@@ -18,7 +18,7 @@ const getRandomItemFromArray = (array) => array[Math.floor(Math.random() * array
 
 const renderWizardArray = (length) => {
   const array = [];
-  
+
   for (let i = 0; i < length; i++) {
     array.push({
       name: `${getRandomItemFromArray(WIZARD_FIRST_NAMES)} ${getRandomItemFromArray(WIZARD_LAST_NAMES)}`,
