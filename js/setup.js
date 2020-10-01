@@ -4,7 +4,7 @@ const WIZARD_FIRST_NAMES = [`Иван`, `Хуан Себастьян`, `Мари
 const WIZARD_LAST_NAMES = [`да Марья`, `Верон`, `Мирабелла`, `Вальц`, `Онопко`, `Топольницкая`, `Нионго`, `Ирвинг`];
 const WIZARD_COAT_COLORS = [`rgb(101, 137, 164)`, `rgb(241, 43, 107)`, `rgb(146, 100, 161)`, `rgb(56, 159, 117)`, `rgb(215, 210, 55)`, `rgb(0, 0, 0)`];
 const WIZARD_EYES_COLORS = [`black`, `red`, `blue`, `yellow`, `green`];
-const FIREBALL_COLOR = [`#ee4830`, `#30a8ee`, `#5ce6c0`, `#e848d5`, `#e6e848`];
+const FIREBALL_COLORS = [`#ee4830`, `#30a8ee`, `#5ce6c0`, `#e848d5`, `#e6e848`];
 
 const setup = document.querySelector(`.setup`);
 
@@ -45,9 +45,7 @@ const renderWizard = (wizard) => {
 const renderWizardsList = () => {
   const fragment = document.createDocumentFragment();
 
-  for (let i = 0; i < wizards.length; i++) {
-    fragment.appendChild(renderWizard(wizards[i]));
-  }
+  wizards.forEach((wizard) => fragment.appendChild(renderWizard(wizard)));
 
   similarListElement.appendChild(fragment);
 };
@@ -85,9 +83,7 @@ const closePopup = () => {
   document.removeEventListener(`keydown`, onPopupEscapePress);
 };
 
-setupOpen.addEventListener(`click`, () => {
-  openPopup();
-});
+setupOpen.addEventListener(`click`, openPopup);
 
 setupOpen.addEventListener(`keydown`, (evt) => {
   if (evt.key === `Enter`) {
@@ -95,9 +91,7 @@ setupOpen.addEventListener(`keydown`, (evt) => {
   }
 });
 
-setupClose.addEventListener(`click`, () => {
-  closePopup();
-});
+setupClose.addEventListener(`click`, closePopup);
 
 setupClose.addEventListener(`keydown`, (evt) => {
   if (evt.key === `Enter`) {
@@ -128,5 +122,5 @@ wizardEyes.addEventListener(`click`, () => {
 });
 
 fireball.addEventListener(`click`, () => {
-  changeWizardBackground(fireball, inputFireballColor, FIREBALL_COLOR);
+  changeWizardBackground(fireball, inputFireballColor, FIREBALL_COLORS);
 });
