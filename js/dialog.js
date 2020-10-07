@@ -6,39 +6,47 @@
   const setupClose = document.querySelector(`.setup-close`);
   const setupUserName = document.querySelector(`.setup-user-name`);
 
-  window.dialog = {
-    element: setupElement
-  };
-
   const onPopupEscapePress = (evt) => {
     if (evt.key === `Escape` && document.activeElement !== setupUserName) {
       evt.preventDefault();
-      window.dialog.element.classList.add(`hidden`);
+      window.util.addHiddenClass(setupElement);
     }
   };
 
   const openPopup = () => {
-    window.dialog.element.classList.remove(`hidden`);
+    window.util.removeHiddenClass(setupElement);
 
-    document.addEventListener(`keydown`, onPopupEscapePress);
+    window.util.addKeydownListener(document, onPopupEscapePress);
   };
 
   const closePopup = () => {
-    window.dialog.element.classList.add(`hidden`);
-    window.dialog.element.removeAttribute(`style`);
+    window.util.addHiddenClass(setupElement);
+    setupElement.removeAttribute(`style`);
 
-    document.removeEventListener(`keydown`, onPopupEscapePress);
+    window.util.removeKeydownListener(document, onPopupEscapePress);
   };
 
-  setupOpen.addEventListener(`click`, openPopup);
+  window.util.addClickListener(setupOpen, openPopup);
 
-  setupOpen.addEventListener(`keydown`, (evt) => {
-    window.util.setKeyEvent(evt, `Enter`, openPopup);
+  window.util.addKeydownListener(setupOpen, (evt) => {
+    window.util.setEnterEvent(evt, openPopup);
   });
 
-  setupClose.addEventListener(`click`, closePopup);
+  window.util.addClickListener(setupClose, closePopup);
 
-  setupClose.addEventListener(`keydown`, (evt) => {
-    window.util.setKeyEvent(evt, `Enter`, closePopup);
+  window.util.addKeydownListener(setupClose, (evt) => {
+    window.util.setEnterEvent(evt, closePopup);
   });
+
+  const getInnerElement = (element) => setupElement.querySelector(element);
+
+  const setCoordinates = (x, y) => {
+    setupElement.style.left = `${setupElement.offsetLeft - x}px`;
+    setupElement.style.top = `${setupElement.offsetTop - y}px`;
+  };
+
+  window.dialog = {
+    getInnerElement,
+    setCoordinates
+  };
 })();

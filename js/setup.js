@@ -8,7 +8,7 @@
   const inputEyesColor = document.querySelector(`input[name="eyes-color"]`);
   const inputFireballColor = document.querySelector(`input[name="fireball-color"]`);
 
-  window.colorize.set(wizardCoat, inputCoatColor, window.util.wizardCoatColors);
-  window.colorize.set(wizardEyes, inputEyesColor, window.util.wizardEyesColors);
-  window.colorize.set(fireball, inputFireballColor, window.util.fireballColors);
+  window.colorize.addChangeColorHandler(wizardCoat, inputCoatColor, window.util.getRandomCoatColor);
+  window.colorize.addChangeColorHandler(wizardEyes, inputEyesColor, window.util.getRandomEyesColor);
+  window.colorize.addChangeColorHandler(fireball, inputFireballColor, window.util.getRandomFireballColor);
 })();

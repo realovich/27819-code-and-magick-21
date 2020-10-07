@@ -1,10 +1,10 @@
 'use strict';
 
 (() => {
-  const dialogHandle = window.dialog.element.querySelector(`.upload`);
+  const dialogHandle = window.dialog.getInnerElement(`.upload`);
 
   const moveDialog = (element) => {
-    element.addEventListener(`mousedown`, (evt) => {
+    window.util.addMousedownListener(element, (evt) => {
       evt.preventDefault();
 
       let startCoordinates = {
@@ -29,28 +29,27 @@
           y: moveEvt.clientY
         };
 
-        window.dialog.element.style.top = `${window.dialog.element.offsetTop - shift.y}px`;
-        window.dialog.element.style.left = `${window.dialog.element.offsetLeft - shift.x}px`;
+        window.dialog.setCoordinates(shift.x, shift.y);
       };
 
       const onMouseUp = (upEvt) => {
         upEvt.preventDefault();
 
-        document.removeEventListener(`mousemove`, onMouseMove);
-        document.removeEventListener(`mouseup`, onMouseUp);
+        window.util.removeMouseupListener(document, onMouseUp);
+        window.util.removeMousemoveListener(document, onMouseMove);
 
         if (dragged) {
           const onClickPreventDefault = (clickEvt) => {
             clickEvt.preventDefault();
-            element.removeEventListener(`click`, onClickPreventDefault);
+            window.util.removeClickListener(element, onClickPreventDefault);
           };
 
-          element.addEventListener(`click`, onClickPreventDefault);
+          window.util.addClickListener(element, onClickPreventDefault);
         }
       };
 
-      document.addEventListener(`mousemove`, onMouseMove);
-      document.addEventListener(`mouseup`, onMouseUp);
+      window.util.addMouseupListener(document, onMouseUp);
+      window.util.addMousemoveListener(document, onMouseMove);
     });
   };
 
