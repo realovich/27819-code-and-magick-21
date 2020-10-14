@@ -3,8 +3,10 @@
 (() => {
   const setupElement = document.querySelector(`.setup`);
   const setupOpen = document.querySelector(`.setup-open`);
-  const setupClose = document.querySelector(`.setup-close`);
-  const setupUserName = document.querySelector(`.setup-user-name`);
+  const setupClose = setupElement.querySelector(`.setup-close`);
+  const setupUserName = setupElement.querySelector(`.setup-user-name`);
+  const setupForm = setupElement.querySelector(`.setup-wizard-form`);
+  const formData = new FormData(setupForm);
 
   const onPopupEscapePress = (evt) => {
     if (evt.key === `Escape` && document.activeElement !== setupUserName) {
@@ -44,6 +46,13 @@
     setupElement.style.left = `${setupElement.offsetLeft - x}px`;
     setupElement.style.top = `${setupElement.offsetTop - y}px`;
   };
+
+  const loadHandler = () => window.util.addHiddenClass(setupElement);
+
+  window.util.addSubmitListener(setupForm, (evt) => {
+    evt.preventDefault();
+    window.backend.save(formData, loadHandler, window.util.errorHandler);
+  });
 
   window.dialog = {
     getInnerElement,
