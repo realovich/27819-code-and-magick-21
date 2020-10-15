@@ -51,7 +51,7 @@
 
   window.util.addSubmitListener(setupForm, (evt) => {
     evt.preventDefault();
-    window.backend.save(formData, loadHandler, window.util.errorHandler);
+    window.backend.save(formData, loadHandler, window.util.renderErrorMessage);
   });
 
   window.dialog = {

@@ -28,5 +28,5 @@
   };
 
 
-  window.backend.load(loadHandler, window.util.errorHandler);
+  window.backend.load(loadHandler, window.util.renderErrorMessage);
 })();

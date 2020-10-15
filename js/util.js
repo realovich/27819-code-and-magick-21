@@ -15,7 +15,7 @@
 
   const getRandomItemFromArray = (array) => array[Math.floor(Math.random() * array.length)];
 
-  const errorHandler = (errorMessage) => {
+  const renderErrorMessage = (errorMessage) => {
     const node = document.createElement(`div`);
     node.style = `position: absoluet; left: 0; right: 0; background-color: tomato; padding: 4px; text-align: center;`;
 
@@ -49,6 +49,6 @@
       }
     },
 
-    errorHandler,
+    renderErrorMessage,
   };
 })();
