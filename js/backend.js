@@ -17,7 +17,7 @@
     POST: `POST`
   };
 
-  const addRequestHandler = (method, {url, onLoad, onError, data}) => {
+  const executeRequest = (method, {url, onLoad, onError, data}) => {
     const xhr = new XMLHttpRequest();
 
     if (method === Method.GET) {
@@ -47,7 +47,7 @@
   };
 
   const load = (onLoad, onError) => {
-    addRequestHandler(Method.GET, {
+    executeRequest(Method.GET, {
       url: RequestUrl.LOAD,
       onLoad,
       onError
@@ -55,7 +55,7 @@
   };
 
   const save = (data, onLoad, onError) => {
-    addRequestHandler(Method.POST, {
+    executeRequest(Method.POST, {
       url: RequestUrl.SAVE,
       onLoad,
       onError,
