@@ -1,15 +1,32 @@
 'use strict';
 
 (() => {
-  const LOAD_URL = `https://21.javascript.pages.academy/code-and-magick/data`;
-  const SAVE_URL = `https://21.javascript.pages.academy/code-and-magick`;
+  const REQUEST_TIMEOUT = 1000;
 
+  const RequestUrl = {
+    LOAD: `https://21.javascript.pages.academy/code-and-magick/data`,
+    SAVE: `https://21.javascript.pages.academy/code-and-magick`
+  };
 
   const StatusCode = {
     OK: 200
   };
 
-  const addLoadHandler = (xhr, onLoad, onError) => {
+  const Method = {
+    GET: `GET`,
+    POST: `POST`
+  };
+
+  const addRequestHandler = (method, {url, onLoad, onError, data}) => {
+    const xhr = new XMLHttpRequest();
+
+    if (method === Method.GET) {
+      xhr.responseType = `json`;
+    }
+
+    xhr.open(method, url);
+    xhr.timeout = REQUEST_TIMEOUT;
+
     xhr.addEventListener(`load`, () => {
       if (xhr.status === StatusCode.OK) {
         onLoad(xhr.response);
@@ -26,26 +43,24 @@
       onError(`Запрос не успел выполниться за ${xhr.timeout} мс`);
     });
 
-    xhr.timeout = 1000;
+    xhr.send(data);
   };
 
   const load = (onLoad, onError) => {
-    const xhr = new XMLHttpRequest();
-    xhr.responseType = `json`;
-    xhr.open(`GET`, LOAD_URL);
-
-    addLoadHandler(xhr, onLoad, onError);
-
-    xhr.send();
+    addRequestHandler(Method.GET, {
+      url: RequestUrl.LOAD,
+      onLoad,
+      onError
+    });
   };
 
   const save = (data, onLoad, onError) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open(`POST`, SAVE_URL);
-
-    addLoadHandler(xhr, onLoad, onError);
-
-    xhr.send(data);
+    addRequestHandler(Method.POST, {
+      url: RequestUrl.SAVE,
+      onLoad,
+      onError,
+      data
+    });
   };
 
   window.backend = {
