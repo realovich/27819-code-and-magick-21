@@ -10,9 +10,18 @@
   const MOUSEDOWN_EVENT = `mousedown`;
   const MOUSEMOVE_EVENT = `mousemove`;
   const MOUSEUP_EVENT = `mouseup`;
+  const SUBMIT_EVENT = `submit`;
   const KEY_ENTER = `Enter`;
 
   const getRandomItemFromArray = (array) => array[Math.floor(Math.random() * array.length)];
+
+  const renderErrorMessage = (errorMessage) => {
+    const node = document.createElement(`div`);
+    node.style = `position: absoluet; left: 0; right: 0; background-color: tomato; padding: 4px; text-align: center;`;
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement(`afterbegin`, node);
+  };
 
   window.util = {
     randomize: getRandomItemFromArray,
@@ -26,8 +35,11 @@
     removeClickListener: (element, cb) => element.removeEventListener(CLICK_EVENT, cb),
     addKeydownListener: (element, cb) => element.addEventListener(KEYDOWN_EVENT, cb),
     removeKeydownListener: (element, cb) => element.removeEventListener(KEYDOWN_EVENT, cb),
+    addSubmitListener: (element, cb) => element.addEventListener(SUBMIT_EVENT, cb),
+
     addHiddenClass: (element) => element.classList.add(HIDDEN_CLASS),
     removeHiddenClass: (element) => element.classList.remove(HIDDEN_CLASS),
+
     getRandomCoatColor: () => getRandomItemFromArray(WIZARD_COAT_COLORS),
     getRandomEyesColor: () => getRandomItemFromArray(WIZARD_EYES_COLORS),
     getRandomFireballColor: () => getRandomItemFromArray(FIREBALL_COLORS),
@@ -36,5 +48,7 @@
         action();
       }
     },
+
+    renderErrorMessage,
   };
 })();
